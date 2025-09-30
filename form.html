@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Inquiry - Horizon Enterprises</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Use only Firebase v8.10.1 for compatibility -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <!-- Favicon -->
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=captive_portal" />
+    <link href="images/horizonlogo.jpg" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="css/all.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min_2.css" rel="stylesheet">
+    <link href="css/bootstrap.min_1.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        /* Your CSS remains the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .admin-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .admin-link:hover {
+            opacity: 1;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('/images/Gemini_Generated_Image_cti0zvcti0zvcti0.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .captcha-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .captcha-code {
+            background: #f1f1f1;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            font-size: 1.2rem;
+            user-select: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .submit-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            color: #7f8c8d;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .alert-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .alert-icon {
+            font-size: 4rem;
+            color: #2ecc71;
+            margin-bottom: 1rem;
+        }
+
+        .alert-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .alert-message {
+            margin-bottom: 1.5rem;
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .alert-btn {
+            padding: 12px 30px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .alert-btn:hover {
+            background: #2980b9;
+        }
+
+        .submission-success {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #2ecc71;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .success-message {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .new-inquiry-btn {
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .new-inquiry-btn:hover {
+            background: #2980b9;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .captcha-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="/images/horizonlogo.jpg" alt="horizon-logo" style="width: 160px;height: 100px; mix-blend-mode: multiply;">
+                    <h1>Horizon Enterprises</h1>
+                </div>
+                <!-- <a href="admin.html" class="admin-link">Admin Login</a> -->
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="inquiryForm">
+            <div class="hero">
+                <h2>Premium Notebook Solutions</h2>
+                <p>Tell us about your specific requirements and we'll provide you with the perfect notebook solution for your needs.</p>
+            </div>
+
+            <div class="form-container" id="formContainer">
+                <h3 class="form-title">Product Inquiry Form</h3>
+                
+                <div id="message" class="message"></div>
+                
+                <form id="inquiryFormElement">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number *</label>
+                        <input type="tel" id="mobile" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="organization">Organization / Institution</label>
+                        <input type="text" id="organization" class="form-control">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="query">Product Requirements / Query *</label>
+                        <textarea id="query" class="form-control" required placeholder="Please describe the type of notebooks you need, quantity, specifications, etc."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Captcha Verification *</label>
+                        <div class="captcha-container">
+                            <div class="captcha-code" id="captchaCode">A3B7C2</div>
+                            <input type="text" id="captchaInput" class="form-control" placeholder="Enter the code above" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">Submit</button>
+                </form>
+            </div>
+
+            <div class="submission-success" id="submissionSuccess">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="success-title">Thank You!</h2>
+                <p class="success-message">Your inquiry has been submitted successfully. Our team will contact you within 24 hours.</p>
+                <button class="new-inquiry-btn" id="newInquiryBtn">Submit Another Inquiry</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Success Alert -->
+    <div class="alert-overlay" id="successAlert">
+        <div class="alert-box">
+            <div class="alert-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="alert-title">Submitted!</h3>
+            <p class="alert-message">Your inquiry has been submitted successfully. We will contact you soon.</p>
+            <button class="alert-btn" id="alertOkBtn">OK</button>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s" id="contact">
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- Address Column -->
+            <div class="col-lg-3 col-md-6">
+                <h4 class="text-light mb-4">Address</h4>
+                <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>No 31 Kannur Yelahanka Road, Kannur Village & Post, Bangalore -560077</p>
+                <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 9986526269</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@horizonent.in</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>sales@horizonent.in</p>
+                <div class="d-flex pt-2">
+                    <a class="btn btn-sm-square bg-white text-primary me-1" href="https://www.facebook.com/profile.php?id=61567691742728"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-sm-square bg-white text-primary me-1" href="https://www.linkedin.com/in/horizon-enterprises-a17444336"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-sm-square bg-white text-primary me-0" href="https://www.instagram.com/horizonent.in?igsh=dTFrbXV3MzRmaGJ6"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Opening Hours Column -->
+            <div class="col-lg-3 col-md-6">
+                <h4 class="text-light mb-4">Opening Hours</h4>
+                <p class="mb-4">08.30 AM - 08.30 PM</p>
+            </div>
+
+            <!-- Contact Us Column -->
+            <div class="col-lg-3 col-md-6">
+                <h4 class="text-light mb-4">Contact Us</h4>
+                <p>If you have any questions or inquiries, or if you would like to discuss how Horizon Enterprises can meet your stationery needs, please feel free to reach out to us. We are always here to assist you in finding the right products that align with your requirements.</p>
+                
+                <h6 class="text-light">Office Address:</h6>
+                <p class="mb-2">Horizon Enterprises</p>
+                <p class="mb-2">No 31 Kannur Yelahanka Road, Kannur Village & Post,</p>
+                <p class="mb-2">Bangalore -560077</p>
+                
+                <h6 class="text-light">Phone:</h6>
+                <p class="mb-0">+91 9986526269</p>
+                
+                <h6 class="text-light">Emails:</h6>
+                <p class="mb-0"><i class="fa fa-envelope me-2"></i>info@horizonent.in</p>
+                <p class="mb-0"><i class="fa fa-envelope me-2"></i>sales@horizonent.in</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="container">
+        <div class="copyright">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <a class="border-bottom" href="#">horizonent.in</a>, All Rights Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    Designed By <a class="border-bottom" href="https://mohammedhuzaifa25.github.io/duotechies/">Duo Tech</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBXx6OJhdD4CUw0izhJQQ3v6A_IhN15xDA",
+            authDomain: "horizon-ee3be.firebaseapp.com",
+            projectId: "horizon-ee3be",
+            storageBucket: "horizon-ee3be.appspot.com",
+            messagingSenderId: "741004395317",
+            appId: "1:741004395317:web:78c3eb9b0770bf273a827c"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // DOM elements
+        const inquiryFormElement = document.getElementById('inquiryFormElement');
+        const formContainer = document.getElementById('formContainer');
+        const submissionSuccess = document.getElementById('submissionSuccess');
+        const messageDiv = document.getElementById('message');
+        const captchaCode = document.getElementById('captchaCode');
+        const captchaInput = document.getElementById('captchaInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const successAlert = document.getElementById('successAlert');
+        const alertOkBtn = document.getElementById('alertOkBtn');
+        const newInquiryBtn = document.getElementById('newInquiryBtn');
+
+        // Check if we're coming from a successful submission
+        if (sessionStorage.getItem('submissionSuccess') === 'true') {
+            showSubmissionSuccess();
+            sessionStorage.removeItem('submissionSuccess');
+        }
+
+        // Generate random captcha
+        function generateCaptcha() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let captcha = '';
+            for (let i = 0; i < 6; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            captchaCode.textContent = captcha;
+            return captcha;
+        }
+
+        let currentCaptcha = generateCaptcha();
+
+        // Show message function
+        function showMessage(element, message, type) {
+            element.textContent = message;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+            
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+        // Show submission success screen
+        function showSubmissionSuccess() {
+            formContainer.style.display = 'none';
+            submissionSuccess.style.display = 'block';
+        }
+
+        // Show form again for new inquiry
+        function showForm() {
+            submissionSuccess.style.display = 'none';
+            formContainer.style.display = 'block';
+            inquiryFormElement.reset();
+            currentCaptcha = generateCaptcha();
+        }
+
+        // Show success alert
+        function showSuccessAlert() {
+            successAlert.style.display = 'flex';
+        }
+
+        // Hide success alert
+        function hideSuccessAlert() {
+            successAlert.style.display = 'none';
+        }
+
+        // Alert OK button event
+        alertOkBtn.addEventListener('click', () => {
+            hideSuccessAlert();
+            showSubmissionSuccess();
+        });
+
+        // New inquiry button event
+        newInquiryBtn.addEventListener('click', showForm);
+
+        // Form submission
+        inquiryFormElement.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validate captcha
+            if (captchaInput.value.toUpperCase() !== currentCaptcha.toUpperCase()) {
+                showMessage(messageDiv, 'Invalid captcha code. Please try again.', 'error');
+                currentCaptcha = generateCaptcha();
+                captchaInput.value = '';
+                return;
+            }
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const mobile = document.getElementById('mobile').value;
+            const organization = document.getElementById('organization').value;
+            const query = document.getElementById('query').value;
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            try {
+                // Save to Firebase
+                await db.collection('inquiries').add({
+                    name: name,
+                    email: email,
+                    mobile: mobile,
+                    organization: organization,
+                    query: query,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    status: 'Pending'
+                });
+                
+                // Show success alert
+                showSuccessAlert();
+                
+                // Reset form
+                inquiryFormElement.reset();
+                currentCaptcha = generateCaptcha();
+                
+            } catch (error) {
+                console.error('Error saving inquiry: ', error);
+                showMessage(messageDiv, 'There was an error submitting your inquiry. Please try again.', 'error');
+                
+                // Re-enable submit button on error
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit';
+            }
+        });
+    </script>
+</body>
+</html>
