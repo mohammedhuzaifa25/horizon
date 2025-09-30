@@ -800,6 +800,26 @@
         </div>
     </div>
 </div>
+    <script>
+// Remove spinner when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        const spinner = document.getElementById('spinner');
+        if (spinner) {
+            spinner.classList.remove('show');
+        }
+    }, 500); // You can adjust the delay if needed
+});
+
+// Alternative jQuery version (if you're using jQuery)
+/*
+$(document).ready(function() {
+    setTimeout(function() {
+        $('#spinner').removeClass('show');
+    }, 500);
+});
+*/
+</script>
 
                     <!-- Footer End -->
 
@@ -831,4 +851,5 @@
 </div>
 </body>
 </html>
+
 
